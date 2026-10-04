@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Послойная визуализация малой теоремы Ферма: циклы точек, простые и составные размерности, бином Ньютона.">
+  <title>Малая теорема Ферма: визуальная лаборатория</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #183047;
+      --muted: #526579;
+      --accent: #176d82;
+      --border: #d8e4e9;
+      --paper: #fff;
+      --wash: #f5f8f8;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--wash);
+      color: var(--ink);
+      font: 18px/1.68 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+    a { color: var(--accent); text-underline-offset: .18em; }
+    a:hover { color: #104f62; }
+    a:focus-visible, summary:focus-visible { outline: 3px solid #f3aa55; outline-offset: 3px; }
+    .site-header {
+      border-bottom: 1px solid var(--border);
+      background: var(--paper);
+    }
+    .site-header-inner {
+      max-width: 1180px;
+      margin: auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { font-size: 14px; font-weight: 750; letter-spacing: .04em; }
+    .header-link { font-size: 14px; white-space: nowrap; }
+    .hero {
+      background: linear-gradient(135deg, #ecf6f3 0%, #edf3fb 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner { max-width: 1180px; margin: auto; padding: 66px 24px 62px; }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 { line-height: 1.18; }
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 600;
+      letter-spacing: -.035em;
+      font-size: clamp(38px, 5.5vw, 67px);
+    }
+    .dek { max-width: 780px; margin: 22px 0 0; color: #2c4f64; font-size: clamp(20px, 2.2vw, 25px); line-height: 1.48; }
+    .hero-equation {
+      display: inline-block;
+      margin: 28px 0 0;
+      padding: 9px 0 7px;
+      border-bottom: 2px solid var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(27px, 3vw, 38px);
+      line-height: 1.25;
+    }
+    .hero-equation small { font: 15px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; color: var(--muted); }
+    .page { max-width: 1180px; margin: auto; padding: 42px 24px 92px; }
+    .contents {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 0 0 48px;
+      padding: 0;
+      list-style: none;
+    }
+    .contents a {
+      display: inline-block;
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--paper);
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .prose { max-width: 760px; }
+    section { margin: 0 0 76px; scroll-margin-top: 24px; }
+    h2 {
+      margin: 0 0 22px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(31px, 3.6vw, 45px);
+      font-weight: 600;
+      letter-spacing: -.025em;
+    }
+    h3 { margin: 34px 0 12px; font-size: 21px; }
+    p { margin: 0 0 18px; }
+    .section-number { display: block; margin-bottom: 8px; color: var(--accent); font: 750 13px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+    .equation {
+      max-width: 760px;
+      margin: 26px 0 30px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(22px, 2.5vw, 29px);
+      line-height: 1.5;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .inline-math { font-family: Georgia, "Times New Roman", serif; white-space: nowrap; }
+    .sum {
+      display: inline-grid;
+      grid-template-rows: auto auto auto;
+      vertical-align: middle;
+      text-align: center;
+      line-height: .9;
+      margin: 0 .12em;
+    }
+    .sum .upper, .sum .lower { font-size: .48em; }
+    .sum .symbol { font-size: 1.45em; line-height: .9; }
+    .figure {
+      margin: 32px 0 18px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--paper);
+    }
+    .figure-scroll { overflow-x: auto; }
+    .figure img {
+      display: block;
+      width: 100%;
+      min-width: 690px;
+      height: auto;
+      margin: auto;
+    }
+    figcaption { margin-top: 12px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .figure-link { font-size: 14px; }
+    details {
+      margin: 26px 0 30px;
+      border: 1px solid #cbdde4;
+      border-radius: 12px;
+      background: #fff;
+    }
+    summary {
+      padding: 15px 20px;
+      color: #14586c;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    details[open] summary { border-bottom: 1px solid var(--border); }
+    .details-body { padding: 20px; }
+    .details-body .figure { margin: 18px 0; }
+    .details-body .figure:first-of-type { margin-top: 4px; }
+    .source-note { max-width: 760px; color: var(--muted); font-size: 16px; }
+    footer { padding: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; text-align: center; }
+    @media (max-width: 700px) {
+      body { font-size: 17px; }
+      .hero-inner { padding: 46px 20px 48px; }
+      .page { padding: 30px 16px 64px; }
+      .site-header-inner { padding: 12px 16px; }
+      .figure { padding: 10px; }
+      .details-body { padding: 10px; }
+      section { margin-bottom: 62px; }
+      .figure figcaption::before { content: "Схему можно прокрутить вправо. "; font-weight: 650; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <span class="brand">little-fermat-lab</span>
+      <a class="header-link" href="#about">Об источниках</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Послойное объяснение</p>
+      <h1>Малая теорема Ферма: визуальная лаборатория</h1>
+      <p class="dek">Как цветные циклы точек объясняют делимость, что происходит в четырёх измерениях и где на рисунках появляется бином Ньютона.</p>
+      <p class="hero-equation">p ∣ (a<sup>p</sup> − a) <small>при простом p</small></p>
+    </div>
+  </div>
+
+  <main class="page">
+    <nav aria-label="Разделы статьи">
+      <ul class="contents">
+        <li><a href="#idea">Идея</a></li>
+        <li><a href="#square">2D</a></li>
+        <li><a href="#cube">3D</a></li>
+        <li><a href="#four">4D</a></li>
+        <li><a href="#five">5D</a></li>
+        <li><a href="#general">Общий случай</a></li>
+        <li><a href="#binomial">Бином Ньютона</a></li>
+        <li><a href="#induction">Доказательство по индукции</a></li>
+      </ul>
+    </nav>
+
+    <article>
+      <section id="idea">
+        <span class="section-number">01 / постановка</span>
+        <h2>Из степени — в набор точек</h2>
+        <div class="prose">
+          <p>Представим <span class="inline-math">a<sup>r</sup></span> как число точек с координатами <span class="inline-math">(x<sub>1</sub>, …, x<sub>r</sub>)</span>. Каждая координата принимает одно из <span class="inline-math">a</span> значений: от 1 до <span class="inline-math">a</span>. На главной диагонали находятся точки <span class="inline-math">(1, …, 1), …, (a, …, a)</span>; их ровно <span class="inline-math">a</span>. Поэтому <span class="inline-math">a<sup>r</sup> − a</span> — число точек вне диагонали.</p>
+          <p>Зачем раскрашивать эти точки? Мы хотим собрать их в циклы по <span class="inline-math">r</span> точек: тогда делимость на <span class="inline-math">r</span> будет видна непосредственно. Для этого переставляем координаты по кругу:</p>
+        </div>
+        <div class="equation" aria-label="Циклический сдвиг координат">(x<sub>1</sub>, x<sub>2</sub>, …, x<sub>r</sub>) → (x<sub>2</sub>, …, x<sub>r</sub>, x<sub>1</sub>).</div>
+        <p class="prose">Повторяем сдвиг до возврата к исходной точке. Полученные точки составляют один цикл и отмечены на схемах одним цветом.</p>
+      </section>
+
+      <section id="square">
+        <span class="section-number">02 / две координаты</span>
+        <h2>Квадрат: пары по две точки</h2>
+        <div class="prose">
+          <p>В квадрате сдвиг меняет координаты местами: <span class="inline-math">(x, y) ↔ (y, x)</span>. Если <span class="inline-math">x ≠ y</span>, получаем пару. Диагональная точка <span class="inline-math">(x, x)</span> остаётся на месте.</p>
+          <p>Например, при <span class="inline-math">a = 7</span> из 49 точек 7 лежат на диагонали, а 42 остальные образуют 21 пару. На рисунке эти же точки видны как два симметричных ступенчатых треугольника по 21 точке.</p>
+        </div>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/r2-overview.png" alt="Квадраты со стороной от 1 до 7. Недиагональные точки одного цикла выделены одинаковыми цветами; при a=7 показаны два симметричных треугольника." loading="lazy"></div>
+          <figcaption>Одна и та же идея при последовательном увеличении стороны квадрата. <a class="figure-link" href="assets/r2-overview.png" target="_blank" rel="noopener">Открыть рисунок отдельно</a>.</figcaption>
+        </figure>
+      </section>
+
+      <section id="cube">
+        <span class="section-number">03 / три координаты</span>
+        <h2>Куб: циклы по три точки</h2>
+        <div class="prose">
+          <p>Теперь сдвиг выглядит так: <span class="inline-math">(x, y, z) → (y, z, x) → (z, x, y)</span>. Если точка не диагональная, это три разные точки. При <span class="inline-math">a = 2</span> вне диагонали остаётся <span class="inline-math">2<sup>3</sup> − 2 = 6</span> точек — два цикла. При <span class="inline-math">a = 3</span> их <span class="inline-math">3<sup>3</sup> − 3 = 24</span> — восемь циклов.</p>
+          <p>Куб показан сдвинутыми квадратными слоями. Координаты внутри каждой клетки позволяют проследить один цвет через все три положения.</p>
+        </div>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/r3-1.png" alt="Послойные схемы трёхмерных кубов при a=2 и a=3; недиагональные тройки точек одного цикла отмечены общим цветом." loading="lazy"></div>
+          <figcaption>При <span class="inline-math">a = 2</span> и <span class="inline-math">a = 3</span> все недиагональные точки разбиваются на тройки.</figcaption>
+        </figure>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/r3-2.png" alt="Четыре слоя трёхмерного куба при a=4; 60 недиагональных точек составляют 20 циклов по три." loading="lazy"></div>
+          <figcaption>При <span class="inline-math">a = 4</span>: <span class="inline-math">4<sup>3</sup> − 4 = 60 = 3 · 20</span>. <a class="figure-link" href="assets/r3-2.png" target="_blank" rel="noopener">Открыть рисунок отдельно</a>.</figcaption>
+        </figure>
+      </section>
+
+      <section id="four">
+        <span class="section-number">04 / составная размерность</span>
+        <h2>Четыре измерения: короткий цикл</h2>
+        <div class="prose">
+          <p>В четырёх измерениях сдвиг может вернуть недиагональную точку уже после двух шагов: <span class="inline-math">(1, 2, 1, 2) ↔ (2, 1, 2, 1)</span>. Такой цикл содержит две точки, а не четыре.</p>
+          <p>При <span class="inline-math">a = 2</span> всего <span class="inline-math">2<sup>4</sup> − 2 = 14</span> недиагональных точек. Двенадцать составляют три цикла по четыре, ещё две — короткий цикл. Поэтому <span class="inline-math">4 ∤ 14</span>. Составная размерность допускает короткие циклы, и прежний аргумент уже не гарантирует делимость.</p>
+        </div>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/r4-a2.png" alt="Четырёхмерный куб при a=2 представлен двумя трёхмерными срезами w=1 и w=2; одна недиагональная пара образует короткий цикл." loading="lazy"></div>
+          <figcaption>Срезы при <span class="inline-math">a = 2</span>; одинаковые цвета отмечают циклы перестановок координат.</figcaption>
+        </figure>
+        <details>
+          <summary>Показать все слои 4D при a = 3</summary>
+          <div class="details-body">
+            <p>Для <span class="inline-math">a = 3</span> получаем <span class="inline-math">3<sup>4</sup> − 3 = 78</span> недиагональных точек: 72 точки в восемнадцати циклах по четыре и 6 точек в трёх циклах по две.</p>
+            <figure class="figure"><div class="figure-scroll"><img src="assets/r4-a3-w1.png" alt="Первый срез длинной послойной схемы четырёхмерного куба при a=3, w=1." loading="lazy"></div><figcaption>Блок <span class="inline-math">w = 1</span>.</figcaption></figure>
+            <figure class="figure"><div class="figure-scroll"><img src="assets/r4-a3-w2.png" alt="Второй срез длинной послойной схемы четырёхмерного куба при a=3, w=2." loading="lazy"></div><figcaption>Блок <span class="inline-math">w = 2</span>.</figcaption></figure>
+            <figure class="figure"><div class="figure-scroll"><img src="assets/r4-a3-w3.png" alt="Третий срез длинной послойной схемы четырёхмерного куба при a=3, w=3." loading="lazy"></div><figcaption>Блок <span class="inline-math">w = 3</span>. <a class="figure-link" href="assets/r4-a3-w3.png" target="_blank" rel="noopener">Открыть этот срез отдельно</a>.</figcaption></figure>
+          </div>
+        </details>
+      </section>
+
+      <section id="five">
+        <span class="section-number">05 / снова простая размерность</span>
+        <h2>Пять измерений: полные циклы</h2>
+        <div class="prose">
+          <p>При пяти координатах недиагональная точка возвращается к себе только после пяти сдвигов. При <span class="inline-math">a = 2</span> вне диагонали <span class="inline-math">2<sup>5</sup> − 2 = 30</span> точек, то есть шесть циклов по пять. При <span class="inline-math">a = 3</span> их <span class="inline-math">3<sup>5</sup> − 3 = 240</span>, или 48 циклов по пять.</p>
+          <p>Пятимерную сетку мы раскладываем на блоки по пятой координате, а каждый блок — на срезы по остальным координатам. Цвет помогает найти части одного цикла в разных местах большой схемы.</p>
+        </div>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/r5-a2.png" alt="Пятимерная сетка при a=2 представлена двумя блоками по координате v; клетки циклов окрашены одинаково." loading="lazy"></div>
+          <figcaption>Два больших блока при <span class="inline-math">a = 2</span>.</figcaption>
+        </figure>
+        <details>
+          <summary>Показать все слои 5D при a = 3</summary>
+          <div class="details-body">
+            <p>Большая схема содержит 243 точки, из которых три диагональные. Остальные 240 разбиваются на 48 циклов по пять.</p>
+            <figure class="figure"><div class="figure-scroll"><img src="assets/r5-a3-v1.png" alt="Первый большой блок пятимерной сетки при a=3, v=1, с девятью квадратными срезами." loading="lazy"></div><figcaption>Блок <span class="inline-math">v = 1</span>.</figcaption></figure>
+            <figure class="figure"><div class="figure-scroll"><img src="assets/r5-a3-v2.png" alt="Второй большой блок пятимерной сетки при a=3, v=2, с девятью квадратными срезами." loading="lazy"></div><figcaption>Блок <span class="inline-math">v = 2</span>.</figcaption></figure>
+            <figure class="figure"><div class="figure-scroll"><img src="assets/r5-a3-v3.png" alt="Третий большой блок пятимерной сетки при a=3, v=3, с девятью квадратными срезами." loading="lazy"></div><figcaption>Блок <span class="inline-math">v = 3</span>. <a class="figure-link" href="assets/r5-a3-v3.png" target="_blank" rel="noopener">Открыть этот срез отдельно</a>.</figcaption></figure>
+          </div>
+        </details>
+      </section>
+
+      <section id="general">
+        <span class="section-number">06 / общее доказательство</span>
+        <h2>Почему простого числа достаточно</h2>
+        <div class="prose">
+          <p>Пусть теперь число координат <span class="inline-math">p</span> простое. После <span class="inline-math">p</span> циклических сдвигов любая точка вернётся на прежнее место. Число сдвигов до первого возврата делит <span class="inline-math">p</span>, а значит, равно либо 1, либо <span class="inline-math">p</span>.</p>
+          <p>Возврат за один сдвиг возможен только у диагональных точек <span class="inline-math">(x, …, x)</span>. Все остальные входят в циклы ровно по <span class="inline-math">p</span> точек. Мы посчитали их двумя способами: как <span class="inline-math">a<sup>p</sup> − a</span> точек и как целое число полных циклов по <span class="inline-math">p</span>. Следовательно, <span class="inline-math">p ∣ (a<sup>p</sup> − a)</span>.</p>
+        </div>
+      </section>
+
+      <section id="binomial">
+        <span class="section-number">07 / связь с биномом</span>
+        <h2>Где на рисунке биномиальные коэффициенты</h2>
+        <div class="prose">
+          <p>Увеличим сторону сетки с <span class="inline-math">a</span> до <span class="inline-math">a + 1</span>. Среди новых точек одна диагональная: <span class="inline-math">(a + 1, …, a + 1)</span>. У остальных новых точек пусть ровно <span class="inline-math">k</span> координат сохранили старые значения от 1 до <span class="inline-math">a</span>, где <span class="inline-math">1 ≤ k ≤ p − 1</span>.</p>
+          <p>Выбрать места для этих <span class="inline-math">k</span> координат можно <span class="inline-math">C(p, k)</span> способами. Задать их значения — <span class="inline-math">a<sup>k</sup></span> способами. Поэтому точек такого типа ровно <span class="inline-math">C(p, k)a<sup>k</sup></span>. Это и есть члены биномиального разложения.</p>
+        </div>
+        <div class="equation" aria-label="Прирост числа недиагональных точек">[(a + 1)<sup>p</sup> − (a + 1)] − [a<sup>p</sup> − a] = <span class="sum" aria-hidden="true"><span class="upper">p−1</span><span class="symbol">∑</span><span class="lower">k=1</span></span> C(p, k)a<sup>k</sup>.</div>
+        <div class="prose">
+          <p>Сдвиг координат не меняет <span class="inline-math">k</span>. При простом <span class="inline-math">p</span> все смешанные точки этого типа образуют циклы по <span class="inline-math">p</span>. Более того, если смотреть только на расположение старых и новых координат, каждый смешанный шаблон тоже входит в цикл из <span class="inline-math">p</span> шаблонов. Так видно, почему внутренние биномиальные коэффициенты <span class="inline-math">C(p, k)</span> кратны <span class="inline-math">p</span>.</p>
+          <p>При <span class="inline-math">r = 4</span> картина иная: <span class="inline-math">C(4, 2) = 6</span>. Среди шести шаблонов с двумя старыми координатами есть чередующаяся пара, возвращающаяся через два сдвига. Именно такой короткий цикл мы видели на рисунке.</p>
+        </div>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/pascal.png" alt="Треугольник Паскаля до строки 13: внутренние биномиальные коэффициенты строк с простыми номерами выделены зелёным." loading="lazy"></div>
+          <figcaption>В строках с простым номером все внутренние биномиальные коэффициенты кратны номеру строки. <a class="figure-link" href="assets/pascal.png" target="_blank" rel="noopener">Открыть рисунок отдельно</a>.</figcaption>
+        </figure>
+      </section>
+
+      <section id="induction">
+        <span class="section-number">08 / алгебраическое доказательство</span>
+        <h2>Доказательство по индукции</h2>
+        <div class="prose">
+          <p>Обозначим <span class="inline-math">F(a) = a<sup>p</sup> − a</span>. Начало: <span class="inline-math">F(1) = 0</span>. Для простого <span class="inline-math">p</span> и <span class="inline-math">1 ≤ k ≤ p − 1</span> число <span class="inline-math">C(p, k)</span> делится на <span class="inline-math">p</span>. Действительно, в равенстве <span class="inline-math">k!(p − k)!C(p, k) = p!</span> справа есть множитель <span class="inline-math">p</span>, а в произведении <span class="inline-math">k!(p − k)!</span> его нет.</p>
+          <p>По формуле для нового слоя <span class="inline-math">F(a + 1) − F(a)</span> — сумма слагаемых, каждое из которых кратно <span class="inline-math">p</span>. Значит, из делимости <span class="inline-math">F(a)</span> следует делимость <span class="inline-math">F(a + 1)</span>. По индукции <span class="inline-math">p ∣ (a<sup>p</sup> − a)</span> для любого натурального <span class="inline-math">a</span>.</p>
+        </div>
+      </section>
+
+      <section id="about">
+        <span class="section-number">09 / контекст</span>
+        <h2>Об этой визуализации</h2>
+        <p class="source-note">Статья предлагает послойный способ проследить известное комбинаторное доказательство по отдельным точкам и связать их циклы с биномиальными коэффициентами. Близкое геометрическое разбиение гиперкуба исследует Aubrey Jaffer в работе <a href="https://people.csail.mit.edu/jaffer/Geometry/Pyramids" target="_blank" rel="noopener">Packing Pyramids</a>. Здесь акцент сделан на координатах, цветных циклах и переходе от рисунков к формуле.</p>
+        <p class="source-note"><a href="assets/MTF_orbity_sloi_Pascal.drawio" download>Скачать редактируемые исходные схемы draw.io</a></p>
+      </section>
+    </article>
+  </main>
+  <footer>Малая теорема Ферма: визуальная лаборатория</footer>
+</body>
+</html>
