@@ -22,7 +22,7 @@
       margin: 0;
       background: var(--wash);
       color: var(--ink);
-      font: 18px/1.68 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font: 14.4px/1.68 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     }
     a { color: var(--accent); text-underline-offset: .18em; }
     a:hover { color: #104f62; }
@@ -40,8 +40,8 @@
       justify-content: space-between;
       gap: 16px;
     }
-    .brand { font-size: 14px; font-weight: 750; letter-spacing: .04em; }
-    .header-link { font-size: 14px; white-space: nowrap; }
+    .brand { font-size: 11.2px; font-weight: 750; letter-spacing: .04em; }
+    .header-link { font-size: 11.2px; white-space: nowrap; }
     .hero {
       background: linear-gradient(135deg, #ecf6f3 0%, #edf3fb 100%);
       border-bottom: 1px solid var(--border);
@@ -50,7 +50,7 @@
     .eyebrow {
       margin: 0 0 12px;
       color: var(--accent);
-      font-size: 13px;
+      font-size: 10.4px;
       font-weight: 800;
       letter-spacing: .13em;
       text-transform: uppercase;
@@ -62,19 +62,19 @@
       font-family: Georgia, "Times New Roman", serif;
       font-weight: 600;
       letter-spacing: -.035em;
-      font-size: clamp(38px, 5.5vw, 67px);
+      font-size: clamp(30.4px, 4.4vw, 53.6px);
     }
-    .dek { max-width: 780px; margin: 22px 0 0; color: #2c4f64; font-size: clamp(20px, 2.2vw, 25px); line-height: 1.48; }
+    .dek { max-width: 780px; margin: 22px 0 0; color: #2c4f64; font-size: clamp(16px, 1.76vw, 20px); line-height: 1.48; }
     .hero-equation {
       display: inline-block;
       margin: 28px 0 0;
       padding: 9px 0 7px;
       border-bottom: 2px solid var(--accent);
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(27px, 3vw, 38px);
+      font-size: clamp(21.6px, 2.4vw, 30.4px);
       line-height: 1.25;
     }
-    .hero-equation small { font: 15px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; color: var(--muted); }
+    .hero-equation small { font: 12px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; color: var(--muted); }
     .page { max-width: 1180px; margin: auto; padding: 42px 24px 92px; }
     .contents {
       display: flex;
@@ -90,7 +90,7 @@
       border: 1px solid var(--border);
       border-radius: 999px;
       background: var(--paper);
-      font-size: 14px;
+      font-size: 11.2px;
       text-decoration: none;
     }
     .prose { max-width: 760px; }
@@ -98,13 +98,13 @@
     h2 {
       margin: 0 0 22px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(31px, 3.6vw, 45px);
+      font-size: clamp(24.8px, 2.88vw, 36px);
       font-weight: 600;
       letter-spacing: -.025em;
     }
-    h3 { margin: 34px 0 12px; font-size: 21px; }
+    h3 { margin: 34px 0 12px; font-size: 16.8px; }
     p { margin: 0 0 18px; }
-    .section-number { display: block; margin-bottom: 8px; color: var(--accent); font: 750 13px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+    .section-number { display: block; margin-bottom: 8px; color: var(--accent); font: 750 10.4px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
     .equation {
       max-width: 760px;
       margin: 26px 0 30px;
@@ -112,7 +112,7 @@
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(22px, 2.5vw, 29px);
+      font-size: clamp(17.6px, 2vw, 23.2px);
       line-height: 1.5;
       overflow-x: auto;
       white-space: nowrap;
@@ -129,7 +129,8 @@
     .sum .upper, .sum .lower { font-size: .48em; }
     .sum .symbol { font-size: 1.45em; line-height: .9; }
     .figure {
-      margin: 32px 0 18px;
+      width: 75%;
+      margin: 32px auto 18px;
       padding: 18px;
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -139,12 +140,14 @@
     .figure img {
       display: block;
       width: 100%;
-      min-width: 690px;
+      min-width: 520px;
       height: auto;
       margin: auto;
     }
-    figcaption { margin-top: 12px; color: var(--muted); font-size: 14px; line-height: 1.5; }
-    .figure-link { font-size: 14px; }
+    .figure-pascal { width: 55%; }
+    .figure-pascal img { min-width: 380px; }
+    figcaption { margin-top: 12px; color: var(--muted); font-size: 11.2px; line-height: 1.5; }
+    .figure-link { font-size: 11.2px; }
     details {
       margin: 26px 0 30px;
       border: 1px solid #cbdde4;
@@ -159,15 +162,16 @@
     }
     details[open] summary { border-bottom: 1px solid var(--border); }
     .details-body { padding: 20px; }
-    .details-body .figure { margin: 18px 0; }
+    .details-body .figure { margin: 18px auto; }
     .details-body .figure:first-of-type { margin-top: 4px; }
-    .source-note { max-width: 760px; color: var(--muted); font-size: 16px; }
-    footer { padding: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; text-align: center; }
+    .source-note { max-width: 760px; color: var(--muted); font-size: 12.8px; }
+    footer { padding: 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 11.2px; text-align: center; }
     @media (max-width: 700px) {
-      body { font-size: 17px; }
+      body { font-size: 13.6px; }
       .hero-inner { padding: 46px 20px 48px; }
       .page { padding: 30px 16px 64px; }
       .site-header-inner { padding: 12px 16px; }
+      .figure, .figure-pascal { width: 100%; }
       .figure { padding: 10px; }
       .details-body { padding: 10px; }
       section { margin-bottom: 62px; }
@@ -314,7 +318,7 @@
           <p>Сдвиг координат не меняет <span class="inline-math">k</span>. При простом <span class="inline-math">p</span> все смешанные точки этого типа образуют циклы по <span class="inline-math">p</span>. Более того, если смотреть только на расположение старых и новых координат, каждый смешанный шаблон тоже входит в цикл из <span class="inline-math">p</span> шаблонов. Так видно, почему внутренние биномиальные коэффициенты <span class="inline-math">C(p, k)</span> кратны <span class="inline-math">p</span>.</p>
           <p>При <span class="inline-math">r = 4</span> картина иная: <span class="inline-math">C(4, 2) = 6</span>. Среди шести шаблонов с двумя старыми координатами есть чередующаяся пара, возвращающаяся через два сдвига. Именно такой короткий цикл мы видели на рисунке.</p>
         </div>
-        <figure class="figure">
+        <figure class="figure figure-pascal">
           <div class="figure-scroll"><img src="assets/pascal.png" alt="Треугольник Паскаля до строки 13: внутренние биномиальные коэффициенты строк с простыми номерами выделены зелёным." loading="lazy"></div>
           <figcaption>В строках с простым номером все внутренние биномиальные коэффициенты кратны номеру строки. <a class="figure-link" href="assets/pascal.png" target="_blank" rel="noopener">Открыть рисунок отдельно</a>.</figcaption>
         </figure>
