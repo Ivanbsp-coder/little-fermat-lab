@@ -149,7 +149,8 @@
     .figure-pascal { width: 55%; }
     .figure-pascal img { min-width: 380px; }
     figcaption { margin-top: 12px; color: var(--muted); font-size: 11.2px; line-height: 1.5; }
-    .figure-link { font-size: 11.2px; }
+    .figure-link { display: block; margin-top: 6px; font-size: 11.2px; }
+    .full-image-link { margin: 18px 0 0; text-align: center; font-size: 11.2px; }
     details {
       margin: 26px 0 30px;
       border: 1px solid #cbdde4;
@@ -235,7 +236,7 @@
         </div>
         <figure class="figure">
           <div class="figure-scroll"><img src="assets/r2-overview.png" alt="Квадраты со стороной от 1 до 7. Недиагональные точки одного цикла выделены одинаковыми цветами; при a=7 показаны два симметричных треугольника." loading="lazy"></div>
-          <figcaption>Одна и та же идея при последовательном увеличении стороны квадрата. <a class="figure-link" href="assets/r2-overview.png" target="_blank" rel="noopener">Открыть рисунок отдельно</a>.</figcaption>
+          <figcaption>Одна и та же идея при последовательном увеличении стороны квадрата. <a class="figure-link" href="assets/r2-overview.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
         </figure>
       </section>
 
@@ -248,11 +249,11 @@
         </div>
         <figure class="figure">
           <div class="figure-scroll"><img src="assets/r3-1.png" alt="Послойные схемы трёхмерных кубов при a=2 и a=3; недиагональные тройки точек одного цикла отмечены общим цветом." loading="lazy"></div>
-          <figcaption>При <span class="inline-math">a = 2</span> и <span class="inline-math">a = 3</span> все недиагональные точки разбиваются на тройки.</figcaption>
+          <figcaption>При <span class="inline-math">a = 2</span> и <span class="inline-math">a = 3</span> все недиагональные точки разбиваются на тройки. <a class="figure-link" href="assets/r3-1.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
         </figure>
         <figure class="figure">
           <div class="figure-scroll"><img src="assets/r3-2.png" alt="Четыре слоя трёхмерного куба при a=4; 60 недиагональных точек составляют 20 циклов по три." loading="lazy"></div>
-          <figcaption>При <span class="inline-math">a = 4</span>: <span class="inline-math">4<sup>3</sup> − 4 = 60 = 3 · 20</span>. <a class="figure-link" href="assets/r3-2.png" target="_blank" rel="noopener">Открыть рисунок отдельно</a>.</figcaption>
+          <figcaption>При <span class="inline-math">a = 4</span>: <span class="inline-math">4<sup>3</sup> − 4 = 60 = 3 · 20</span>. <a class="figure-link" href="assets/r3-2.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
         </figure>
       </section>
 
@@ -265,7 +266,7 @@
         </div>
         <figure class="figure">
           <div class="figure-scroll"><img src="assets/r4-a2.png" alt="Четырёхмерный куб при a=2 представлен двумя трёхмерными срезами w=1 и w=2; одна недиагональная пара образует короткий цикл." loading="lazy"></div>
-          <figcaption>Срезы при <span class="inline-math">a = 2</span>; одинаковые цвета отмечают циклы перестановок координат.</figcaption>
+          <figcaption>Срезы при <span class="inline-math">a = 2</span>; одинаковые цвета отмечают циклы перестановок координат. <a class="figure-link" href="assets/r4-a2.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
         </figure>
         <details>
           <summary>Показать все слои 4D при a = 3</summary>
@@ -273,7 +274,8 @@
             <p>Для <span class="inline-math">a = 3</span> получаем <span class="inline-math">3<sup>4</sup> − 3 = 78</span> недиагональных точек: 72 точки в восемнадцати циклах по четыре и 6 точек в трёх циклах по две.</p>
             <figure class="figure"><div class="figure-scroll"><img src="assets/r4-a3-w1.png" alt="Первый срез длинной послойной схемы четырёхмерного куба при a=3, w=1." loading="lazy"></div><figcaption>Блок <span class="inline-math">w = 1</span>.</figcaption></figure>
             <figure class="figure"><div class="figure-scroll"><img src="assets/r4-a3-w2.png" alt="Второй срез длинной послойной схемы четырёхмерного куба при a=3, w=2." loading="lazy"></div><figcaption>Блок <span class="inline-math">w = 2</span>.</figcaption></figure>
-            <figure class="figure"><div class="figure-scroll"><img src="assets/r4-a3-w3.png" alt="Третий срез длинной послойной схемы четырёхмерного куба при a=3, w=3." loading="lazy"></div><figcaption>Блок <span class="inline-math">w = 3</span>. <a class="figure-link" href="assets/r4-a3-w3.png" target="_blank" rel="noopener">Открыть этот срез отдельно</a>.</figcaption></figure>
+            <figure class="figure"><div class="figure-scroll"><img src="assets/r4-a3-w3.png" alt="Третий срез длинной послойной схемы четырёхмерного куба при a=3, w=3." loading="lazy"></div><figcaption>Блок <span class="inline-math">w = 3</span>.</figcaption></figure>
+            <p class="full-image-link"><a href="assets/r4-a3-complete.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></p>
           </div>
         </details>
       </section>
@@ -287,7 +289,7 @@
         </div>
         <figure class="figure">
           <div class="figure-scroll"><img src="assets/r5-a2.png" alt="Пятимерная сетка при a=2 представлена двумя блоками по координате v; клетки циклов окрашены одинаково." loading="lazy"></div>
-          <figcaption>Два больших блока при <span class="inline-math">a = 2</span>.</figcaption>
+          <figcaption>Два больших блока при <span class="inline-math">a = 2</span>. <a class="figure-link" href="assets/r5-a2.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
         </figure>
         <details>
           <summary>Показать все слои 5D при a = 3</summary>
@@ -295,7 +297,8 @@
             <p>Большая схема содержит 243 точки, из которых три диагональные. Остальные 240 разбиваются на 48 циклов по пять.</p>
             <figure class="figure"><div class="figure-scroll"><img src="assets/r5-a3-v1.png" alt="Первый большой блок пятимерной сетки при a=3, v=1, с девятью квадратными срезами." loading="lazy"></div><figcaption>Блок <span class="inline-math">v = 1</span>.</figcaption></figure>
             <figure class="figure"><div class="figure-scroll"><img src="assets/r5-a3-v2.png" alt="Второй большой блок пятимерной сетки при a=3, v=2, с девятью квадратными срезами." loading="lazy"></div><figcaption>Блок <span class="inline-math">v = 2</span>.</figcaption></figure>
-            <figure class="figure"><div class="figure-scroll"><img src="assets/r5-a3-v3.png" alt="Третий большой блок пятимерной сетки при a=3, v=3, с девятью квадратными срезами." loading="lazy"></div><figcaption>Блок <span class="inline-math">v = 3</span>. <a class="figure-link" href="assets/r5-a3-v3.png" target="_blank" rel="noopener">Открыть этот срез отдельно</a>.</figcaption></figure>
+            <figure class="figure"><div class="figure-scroll"><img src="assets/r5-a3-v3.png" alt="Третий большой блок пятимерной сетки при a=3, v=3, с девятью квадратными срезами." loading="lazy"></div><figcaption>Блок <span class="inline-math">v = 3</span>.</figcaption></figure>
+            <p class="full-image-link"><a href="assets/r5-a3-complete.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></p>
           </div>
         </details>
       </section>
@@ -323,7 +326,7 @@
         </div>
         <figure class="figure figure-pascal">
           <div class="figure-scroll"><img src="assets/pascal.png" alt="Треугольник Паскаля до строки 13: внутренние биномиальные коэффициенты строк с простыми номерами выделены зелёным." loading="lazy"></div>
-          <figcaption>В строках с простым номером все внутренние биномиальные коэффициенты кратны номеру строки. <a class="figure-link" href="assets/pascal.png" target="_blank" rel="noopener">Открыть рисунок отдельно</a>.</figcaption>
+          <figcaption>В строках с простым номером все внутренние биномиальные коэффициенты кратны номеру строки. <a class="figure-link" href="assets/pascal.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
         </figure>
       </section>
 
