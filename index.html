@@ -118,16 +118,6 @@
       white-space: nowrap;
     }
     .inline-math { font-family: Georgia, "Times New Roman", serif; white-space: nowrap; }
-    .sum {
-      display: inline-grid;
-      grid-template-rows: auto auto auto;
-      vertical-align: middle;
-      text-align: center;
-      line-height: .9;
-      margin: 0 .12em;
-    }
-    .sum .upper, .sum .lower { font-size: .48em; }
-    .sum .symbol { font-size: 1.45em; line-height: .9; }
     .figure {
       width: 75%;
       margin: 32px auto 18px;
@@ -136,7 +126,7 @@
       border-radius: 14px;
       background: var(--paper);
     }
-    .figure-scroll { overflow-x: auto; }
+    .figure-scroll, .cycle-steps { overflow-x: auto; }
     .figure img {
       display: block;
       width: 100%;
@@ -212,6 +202,7 @@
         <li><a href="#general">Общий случай</a></li>
         <li><a href="#binomial">Бином Ньютона</a></li>
         <li><a href="#induction">Доказательство по индукции</a></li>
+        <li><a href="#simple-proof">Короткое доказательство</a></li>
       </ul>
     </nav>
 
@@ -220,11 +211,11 @@
         <span class="section-number">01 / постановка</span>
         <h2>Из степени — в набор точек</h2>
         <div class="prose">
-          <p>Представим <span class="inline-math">a<sup>r</sup></span> как число точек с координатами <span class="inline-math">(x<sub>1</sub>, …, x<sub>r</sub>)</span>. Каждая координата принимает одно из <span class="inline-math">a</span> значений: от 1 до <span class="inline-math">a</span>. На главной диагонали находятся точки <span class="inline-math">(1, …, 1), …, (a, …, a)</span>; их ровно <span class="inline-math">a</span>. Поэтому <span class="inline-math">a<sup>r</sup> − a</span> — число точек вне диагонали.</p>
-          <p>Зачем раскрашивать эти точки? Мы хотим собрать их в циклы по <span class="inline-math">r</span> точек: тогда делимость на <span class="inline-math">r</span> будет видна непосредственно. Для этого переставляем координаты по кругу:</p>
+          <p><span class="inline-math">a<sup>r</sup></span> = число точек <span class="inline-math">p<sub>1</sub>, p<sub>2</sub>, …, p<sub>a<sup>r</sup></sub></span> с координатами <span class="inline-math">(x<sub>1</sub>, …, x<sub>r</sub>)</span>. Каждая координата принимает одно из <span class="inline-math">a</span> значений: от 1 до <span class="inline-math">a</span>. На главной диагонали находятся точки <span class="inline-math">(1, …, 1), …, (a, …, a)</span>; их ровно <span class="inline-math">a</span>. Поэтому <span class="inline-math">a<sup>r</sup> − a</span> — число точек вне диагонали.</p>
+          <p>Зачем раскрашивать эти точки? Если число координат <span class="inline-math">r</span> простое, все точки вне диагонали можно сгруппировать в циклы по <span class="inline-math">r</span> точек. Тогда сразу видно, почему их число делится на <span class="inline-math">r</span>. Посмотрим, как при каждом сдвиге первая координата переходит в конец.</p>
         </div>
-        <div class="equation" aria-label="Циклический сдвиг координат">(x<sub>1</sub>, x<sub>2</sub>, …, x<sub>r</sub>) → (x<sub>2</sub>, …, x<sub>r</sub>, x<sub>1</sub>).</div>
-        <p class="prose">Повторяем сдвиг до возврата к исходной точке. Полученные точки составляют один цикл и отмечены на схемах одним цветом.</p>
+        <div class="equation" aria-label="Циклический сдвиг координат">(x<sub>1</sub>, x<sub>2</sub>, …, x<sub>r</sub>) → (x<sub>2</sub>, …, x<sub>r</sub>, x<sub>1</sub>) → (x<sub>3</sub>, …, x<sub>r</sub>, x<sub>1</sub>, x<sub>2</sub>) → … → (x<sub>r</sub>, x<sub>1</sub>, …, x<sub>r−1</sub>)</div>
+        <p class="prose">Начинаем с исходной точки и выписываем точки по порядку. Последней записываем ту, из которой следующий сдвиг вернёт нас в исходную точку. При составном <span class="inline-math">r</span> такой возврат возможен уже до <span class="inline-math">r</span>-го сдвига и для точек вне диагонали. На схемах циклов все точки одного цикла отмечены одним цветом.</p>
       </section>
 
       <section id="square">
@@ -238,6 +229,20 @@
           <div class="figure-scroll"><img src="assets/r2-overview.png" alt="Квадраты со стороной от 1 до 7. Недиагональные точки одного цикла выделены одинаковыми цветами; при a=7 показаны два симметричных треугольника." loading="lazy"></div>
           <figcaption>Одна и та же идея при последовательном увеличении стороны квадрата. <a class="figure-link" href="assets/r2-overview.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
         </figure>
+        <div class="prose">
+          <h3>Квадрат со стороной <span class="inline-math">a = 2</span></h3>
+          <p>У каждой точки две координаты. Из четырёх точек квадрата две лежат на диагонали — <span class="inline-math">(1, 1)</span> и <span class="inline-math">(2, 2)</span>. Две другие образуют один цикл <span class="inline-math">(1, 2) ↔ (2, 1)</span>.</p>
+
+          <h3>Квадрат со стороной <span class="inline-math">a = 3</span></h3>
+          <p>Теперь каждая из двух координат принимает значения от 1 до 3. Всего получаем девять точек. Три лежат на диагонали — <span class="inline-math">(1, 1)</span>, <span class="inline-math">(2, 2)</span> и <span class="inline-math">(3, 3)</span>. Остальные шесть образуют три пары.</p>
+          <ul>
+            <li><span class="inline-math">(1, 2) ↔ (2, 1)</span></li>
+            <li><span class="inline-math">(1, 3) ↔ (3, 1)</span></li>
+            <li><span class="inline-math">(2, 3) ↔ (3, 2)</span></li>
+          </ul>
+          <p>При <span class="inline-math">a ≥ 4</span> поступаем так же. Точки с равными координатами лежат на диагонали, а каждой точке <span class="inline-math">(x, y)</span> вне диагонали соответствует парная точка <span class="inline-math">(y, x)</span>.</p>
+          <p>У каждой точки вне диагонали есть ровно одна парная точка. Значит, все точки вне диагонали разбиваются на пары, и их число <span class="inline-math">a<sup>2</sup> − a</span> делится на <span class="inline-math">r = 2</span>.</p>
+        </div>
       </section>
 
       <section id="cube">
@@ -255,6 +260,32 @@
           <div class="figure-scroll"><img src="assets/r3-2.png" alt="Четыре слоя трёхмерного куба при a=4; 60 недиагональных точек составляют 20 циклов по три." loading="lazy"></div>
           <figcaption>При <span class="inline-math">a = 4</span>: <span class="inline-math">4<sup>3</sup> − 4 = 60 = 3 · 20</span>. <a class="figure-link" href="assets/r3-2.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
         </figure>
+        <div class="prose">
+          <h3>Куб со стороной <span class="inline-math">a = 2</span></h3>
+          <p>У каждой точки три координаты, и каждая равна 1 или 2. Всего точек восемь. На главной диагонали лежат <span class="inline-math">(1, 1, 1)</span> и <span class="inline-math">(2, 2, 2)</span>. Остальные шесть точек образуют два цикла. В первом можно следить за двойкой, во втором — за единицей.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 2) → (1, 2, 1) → (2, 1, 1)</span></li>
+            <li><span class="inline-math">(1, 2, 2) → (2, 2, 1) → (2, 1, 2)</span></li>
+          </ul>
+
+          <h3>Куб со стороной <span class="inline-math">a = 3</span></h3>
+          <p>Теперь каждая из трёх координат принимает значения от 1 до 3. Из 27 точек на главной диагонали лежат три — <span class="inline-math">(1, 1, 1)</span>, <span class="inline-math">(2, 2, 2)</span> и <span class="inline-math">(3, 3, 3)</span>. Остальные 24 точки образуют восемь циклов.</p>
+          <p>В шести циклах две координаты равны. При каждом сдвиге отличающееся число переходит на соседнее место по кругу.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 2) → (1, 2, 1) → (2, 1, 1)</span></li>
+            <li><span class="inline-math">(1, 2, 2) → (2, 2, 1) → (2, 1, 2)</span></li>
+            <li><span class="inline-math">(1, 1, 3) → (1, 3, 1) → (3, 1, 1)</span></li>
+            <li><span class="inline-math">(1, 3, 3) → (3, 3, 1) → (3, 1, 3)</span></li>
+            <li><span class="inline-math">(2, 2, 3) → (2, 3, 2) → (3, 2, 2)</span></li>
+            <li><span class="inline-math">(2, 3, 3) → (3, 3, 2) → (3, 2, 3)</span></li>
+          </ul>
+          <p>В двух оставшихся циклах встречаются все три числа. Если читать координаты по кругу, то в первом цикле за единицей всегда идёт двойка, а во втором — тройка.</p>
+          <ul>
+            <li><span class="inline-math">(1, 2, 3) → (2, 3, 1) → (3, 1, 2)</span></li>
+            <li><span class="inline-math">(1, 3, 2) → (3, 2, 1) → (2, 1, 3)</span></li>
+          </ul>
+          <p>При <span class="inline-math">a ≥ 4</span> циклы строятся точно так же. Третий сдвиг всегда возвращает точку в исходное положение. Вернуться раньше можно только при <span class="inline-math">x = y = z</span>, то есть на диагонали. Значит, все точки вне диагонали разбиваются на циклы ровно по три, и их число <span class="inline-math">a<sup>3</sup> − a</span> делится на <span class="inline-math">r = 3</span>.</p>
+        </div>
       </section>
 
       <section id="four">
@@ -278,6 +309,56 @@
             <p class="full-image-link"><a href="assets/r4-a3-complete.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></p>
           </div>
         </details>
+        <div class="prose">
+          <h3>Четыре координаты при <span class="inline-math">a = 2</span></h3>
+          <p>Каждая из четырёх координат равна 1 или 2. Всего получаем <span class="inline-math">2<sup>4</sup> = 16</span> точек. Две из них лежат на главной диагонали — <span class="inline-math">(1, 1, 1, 1)</span> и <span class="inline-math">(2, 2, 2, 2)</span>. Каждая при сдвиге остаётся на месте и образует цикл длины один.</p>
+          <p>Вне диагонали есть три цикла длины четыре. В каждой строке следующий сдвиг после последней точки возвращает нас к первой.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 1, 2)</span> → <span class="inline-math">(1, 1, 2, 1)</span> → <span class="inline-math">(1, 2, 1, 1)</span> → <span class="inline-math">(2, 1, 1, 1)</span></li>
+            <li><span class="inline-math">(1, 1, 2, 2)</span> → <span class="inline-math">(1, 2, 2, 1)</span> → <span class="inline-math">(2, 2, 1, 1)</span> → <span class="inline-math">(2, 1, 1, 2)</span></li>
+            <li><span class="inline-math">(1, 2, 2, 2)</span> → <span class="inline-math">(2, 2, 2, 1)</span> → <span class="inline-math">(2, 2, 1, 2)</span> → <span class="inline-math">(2, 1, 2, 2)</span></li>
+          </ul>
+          <p>У двух оставшихся точек единицы и двойки чередуются. Первый сдвиг переводит одну точку в другую, а второй уже возвращает нас к исходной. Получается короткий цикл <span class="inline-math">(1, 2, 1, 2) ↔ (2, 1, 2, 1)</span>.</p>
+          <p>Три полных цикла дают 12 точек, а короткий цикл добавляет ещё две. Поэтому число точек вне диагонали <span class="inline-math">2<sup>4</sup> − 2 = 14 = 3 · 4 + 2</span> при делении на 4 даёт остаток 2.</p>
+        </div>
+        <div class="prose">
+          <h3>Четыре координаты при <span class="inline-math">a = 3</span></h3>
+          <p>Теперь каждая из четырёх координат принимает значения от 1 до 3. Из <span class="inline-math">3<sup>4</sup> = 81</span> точки три лежат на главной диагонали — <span class="inline-math">(1, 1, 1, 1)</span>, <span class="inline-math">(2, 2, 2, 2)</span> и <span class="inline-math">(3, 3, 3, 3)</span>. При сдвиге каждая из них остаётся на месте.</p>
+          <p><strong>Три координаты равны.</strong> Отличающееся число по очереди занимает все четыре места. Получаем шесть циклов длины четыре.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 1, 2)</span> → <span class="inline-math">(1, 1, 2, 1)</span> → <span class="inline-math">(1, 2, 1, 1)</span> → <span class="inline-math">(2, 1, 1, 1)</span></li>
+            <li><span class="inline-math">(1, 1, 1, 3)</span> → <span class="inline-math">(1, 1, 3, 1)</span> → <span class="inline-math">(1, 3, 1, 1)</span> → <span class="inline-math">(3, 1, 1, 1)</span></li>
+            <li><span class="inline-math">(2, 2, 2, 1)</span> → <span class="inline-math">(2, 2, 1, 2)</span> → <span class="inline-math">(2, 1, 2, 2)</span> → <span class="inline-math">(1, 2, 2, 2)</span></li>
+            <li><span class="inline-math">(2, 2, 2, 3)</span> → <span class="inline-math">(2, 2, 3, 2)</span> → <span class="inline-math">(2, 3, 2, 2)</span> → <span class="inline-math">(3, 2, 2, 2)</span></li>
+            <li><span class="inline-math">(3, 3, 3, 1)</span> → <span class="inline-math">(3, 3, 1, 3)</span> → <span class="inline-math">(3, 1, 3, 3)</span> → <span class="inline-math">(1, 3, 3, 3)</span></li>
+            <li><span class="inline-math">(3, 3, 3, 2)</span> → <span class="inline-math">(3, 3, 2, 3)</span> → <span class="inline-math">(3, 2, 3, 3)</span> → <span class="inline-math">(2, 3, 3, 3)</span></li>
+          </ul>
+          <p><strong>Встречаются все три числа.</strong> Одно из них встречается дважды, а каждое из двух других — по одному разу. Проследим за числом, которое встречается один раз. Оно вернётся на своё место только после четырёх сдвигов. Таких циклов девять.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 2, 3)</span> → <span class="inline-math">(1, 2, 3, 1)</span> → <span class="inline-math">(2, 3, 1, 1)</span> → <span class="inline-math">(3, 1, 1, 2)</span></li>
+            <li><span class="inline-math">(1, 1, 3, 2)</span> → <span class="inline-math">(1, 3, 2, 1)</span> → <span class="inline-math">(3, 2, 1, 1)</span> → <span class="inline-math">(2, 1, 1, 3)</span></li>
+            <li><span class="inline-math">(1, 2, 1, 3)</span> → <span class="inline-math">(2, 1, 3, 1)</span> → <span class="inline-math">(1, 3, 1, 2)</span> → <span class="inline-math">(3, 1, 2, 1)</span></li>
+            <li><span class="inline-math">(2, 2, 1, 3)</span> → <span class="inline-math">(2, 1, 3, 2)</span> → <span class="inline-math">(1, 3, 2, 2)</span> → <span class="inline-math">(3, 2, 2, 1)</span></li>
+            <li><span class="inline-math">(2, 2, 3, 1)</span> → <span class="inline-math">(2, 3, 1, 2)</span> → <span class="inline-math">(3, 1, 2, 2)</span> → <span class="inline-math">(1, 2, 2, 3)</span></li>
+            <li><span class="inline-math">(2, 1, 2, 3)</span> → <span class="inline-math">(1, 2, 3, 2)</span> → <span class="inline-math">(2, 3, 2, 1)</span> → <span class="inline-math">(3, 2, 1, 2)</span></li>
+            <li><span class="inline-math">(3, 3, 1, 2)</span> → <span class="inline-math">(3, 1, 2, 3)</span> → <span class="inline-math">(1, 2, 3, 3)</span> → <span class="inline-math">(2, 3, 3, 1)</span></li>
+            <li><span class="inline-math">(3, 3, 2, 1)</span> → <span class="inline-math">(3, 2, 1, 3)</span> → <span class="inline-math">(2, 1, 3, 3)</span> → <span class="inline-math">(1, 3, 3, 2)</span></li>
+            <li><span class="inline-math">(3, 1, 3, 2)</span> → <span class="inline-math">(1, 3, 2, 3)</span> → <span class="inline-math">(3, 2, 3, 1)</span> → <span class="inline-math">(2, 3, 1, 3)</span></li>
+          </ul>
+          <p><strong>Два числа встречаются по два раза.</strong> Здесь длина цикла зависит от порядка координат. Если одинаковые числа стоят рядом по кругу, цикл содержит четыре точки.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 2, 2)</span> → <span class="inline-math">(1, 2, 2, 1)</span> → <span class="inline-math">(2, 2, 1, 1)</span> → <span class="inline-math">(2, 1, 1, 2)</span></li>
+            <li><span class="inline-math">(1, 1, 3, 3)</span> → <span class="inline-math">(1, 3, 3, 1)</span> → <span class="inline-math">(3, 3, 1, 1)</span> → <span class="inline-math">(3, 1, 1, 3)</span></li>
+            <li><span class="inline-math">(2, 2, 3, 3)</span> → <span class="inline-math">(2, 3, 3, 2)</span> → <span class="inline-math">(3, 3, 2, 2)</span> → <span class="inline-math">(3, 2, 2, 3)</span></li>
+          </ul>
+          <p>Если числа чередуются, уже второй сдвиг восстанавливает исходный порядок. Каждая из трёх пар чисел даёт один короткий цикл.</p>
+          <ul>
+            <li><span class="inline-math">(1, 2, 1, 2)</span> ↔ <span class="inline-math">(2, 1, 2, 1)</span></li>
+            <li><span class="inline-math">(1, 3, 1, 3)</span> ↔ <span class="inline-math">(3, 1, 3, 1)</span></li>
+            <li><span class="inline-math">(2, 3, 2, 3)</span> ↔ <span class="inline-math">(3, 2, 3, 2)</span></li>
+          </ul>
+          <p>Итак, вне диагонали получаем 18 циклов по четыре точки и 3 коротких цикла по две. Полные циклы дают 72 точки. Из шести точек коротких циклов можно составить ещё одну четвёрку, и останутся две точки. Поэтому <span class="inline-math">3<sup>4</sup> − 3 = 78 = 4 · 19 + 2</span>. Число точек вне диагонали при делении на 4 даёт остаток 2.</p>
+        </div>
       </section>
 
       <section id="five">
@@ -301,28 +382,249 @@
             <p class="full-image-link"><a href="assets/r5-a3-complete.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></p>
           </div>
         </details>
+        <div class="prose">
+          <h3>Пять координат при <span class="inline-math">a = 2</span></h3>
+          <p>Каждая из пяти координат равна 1 или 2. Всего получаем <span class="inline-math">2<sup>5</sup> = 32</span> точки. На главной диагонали лежат две — <span class="inline-math">(1, 1, 1, 1, 1)</span> и <span class="inline-math">(2, 2, 2, 2, 2)</span>. Каждая при сдвиге остаётся на месте.</p>
+          <p>Если одна координата отличается от остальных, достаточно проследить, как она обходит все пять мест. Так получаем один цикл с единственной двойкой и один с единственной единицей.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 1, 1, 2)</span> → <span class="inline-math">(1, 1, 1, 2, 1)</span> → <span class="inline-math">(1, 1, 2, 1, 1)</span> → <span class="inline-math">(1, 2, 1, 1, 1)</span> → <span class="inline-math">(2, 1, 1, 1, 1)</span></li>
+            <li><span class="inline-math">(1, 2, 2, 2, 2)</span> → <span class="inline-math">(2, 2, 2, 2, 1)</span> → <span class="inline-math">(2, 2, 2, 1, 2)</span> → <span class="inline-math">(2, 2, 1, 2, 2)</span> → <span class="inline-math">(2, 1, 2, 2, 2)</span></li>
+          </ul>
+          <p>Если двоек две, возможны два расположения. В первом цикле двойки стоят рядом по кругу, во втором их разделяет единица. Сдвиг сохраняет расстояние между ними.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 1, 2, 2)</span> → <span class="inline-math">(1, 1, 2, 2, 1)</span> → <span class="inline-math">(1, 2, 2, 1, 1)</span> → <span class="inline-math">(2, 2, 1, 1, 1)</span> → <span class="inline-math">(2, 1, 1, 1, 2)</span></li>
+            <li><span class="inline-math">(1, 1, 2, 1, 2)</span> → <span class="inline-math">(1, 2, 1, 2, 1)</span> → <span class="inline-math">(2, 1, 2, 1, 1)</span> → <span class="inline-math">(1, 2, 1, 1, 2)</span> → <span class="inline-math">(2, 1, 1, 2, 1)</span></li>
+          </ul>
+          <p>Если двоек три, проследим за двумя единицами. Они тоже могут стоять рядом по кругу или через одно место. Это даёт ещё два цикла.</p>
+          <ul>
+            <li><span class="inline-math">(1, 1, 2, 2, 2)</span> → <span class="inline-math">(1, 2, 2, 2, 1)</span> → <span class="inline-math">(2, 2, 2, 1, 1)</span> → <span class="inline-math">(2, 2, 1, 1, 2)</span> → <span class="inline-math">(2, 1, 1, 2, 2)</span></li>
+            <li><span class="inline-math">(1, 2, 1, 2, 2)</span> → <span class="inline-math">(2, 1, 2, 2, 1)</span> → <span class="inline-math">(1, 2, 2, 1, 2)</span> → <span class="inline-math">(2, 2, 1, 2, 1)</span> → <span class="inline-math">(2, 1, 2, 1, 2)</span></li>
+          </ul>
+          <p>После пяти сдвигов все координаты возвращаются на свои места. За эти пять шагов точка проходит свой цикл целое число раз, поэтому длина цикла делит 5. У простого числа 5 всего два положительных делителя — 1 и 5. Цикл длины 1 возможен только на диагонали, где все координаты равны.</p>
+          <p>Значит, каждый цикл вне диагонали содержит ровно пять точек. Мы выписали шесть таких циклов, поэтому число точек вне диагонали <span class="inline-math">2<sup>5</sup> − 2 = 30 = 6 · 5</span> делится на 5.</p>
+        </div>
       </section>
 
       <section id="general">
         <span class="section-number">06 / общее доказательство</span>
         <h2>Почему простого числа достаточно</h2>
         <div class="prose">
-          <p>Пусть теперь число координат <span class="inline-math">p</span> простое. После <span class="inline-math">p</span> циклических сдвигов любая точка вернётся на прежнее место. Число сдвигов до первого возврата делит <span class="inline-math">p</span>, а значит, равно либо 1, либо <span class="inline-math">p</span>.</p>
-          <p>Возврат за один сдвиг возможен только у диагональных точек <span class="inline-math">(x, …, x)</span>. Все остальные входят в циклы ровно по <span class="inline-math">p</span> точек. Мы посчитали их двумя способами: как <span class="inline-math">a<sup>p</sup> − a</span> точек и как целое число полных циклов по <span class="inline-math">p</span>. Следовательно, <span class="inline-math">p ∣ (a<sup>p</sup> − a)</span>.</p>
+          <p>Возьмём точку с <span class="inline-math">r</span> координатами. Каждое различное число в её записи обозначим своей буквой. Если число повторяется, повторим и букву. При всех сдвигах точки эти обозначения сохраняются.</p>
+          <p>Например, при <span class="inline-math">r = 2</span> точку с равными координатами запишем как <span class="inline-math">(x, x)</span>, а с разными — как <span class="inline-math">(x, y)</span>. При <span class="inline-math">r = 3</span> запись <span class="inline-math">(x, y, z)</span> означает, что все три числа различны.</p>
+          <p>Посмотрим на точку <span class="inline-math">(x, x, y)</span>. Так можно записать, например, <span class="inline-math">(3, 3, 1)</span> или <span class="inline-math">(2, 2, 3)</span>. В обоих случаях по букве <span class="inline-math">y</span> видно, как при сдвигах число, встретившееся один раз, обходит все три места.</p>
+        </div>
+        <div class="equation" aria-label="Цикл точки с двумя одинаковыми координатами">(x, x, y) → (x, y, x) → (y, x, x)</div>
+        <div class="prose">
+          <p>Теперь пусть число координат <span class="inline-math">r = p</span> простое. Через <span class="inline-math">p</span> сдвигов каждая координата обойдёт все места и вернётся на своё. Пусть точка впервые вернулась в исходное положение через <span class="inline-math">d</span> сдвигов. Дальше тот же цикл повторяется, поэтому и за <span class="inline-math">p</span> сдвигов точка проходит целое число циклов длины <span class="inline-math">d</span>. Значит, <span class="inline-math">d</span> делит <span class="inline-math">p</span>. У простого числа <span class="inline-math">p</span> всего два положительных делителя — 1 и само <span class="inline-math">p</span>.</p>
+          <p>Когда возможен цикл длины 1? Сравним точку с её первым сдвигом. После сдвига каждое место занимает буква с соседнего места. Чтобы запись осталась прежней, все соседние буквы по кругу должны совпадать. Значит, все координаты равны. Это в точности диагональные точки, в записи которых одна и та же буква стоит на всех местах. Для любой точки вне диагонали остаётся единственная возможная длина цикла — <span class="inline-math">p</span>.</p>
+          <p>На каждом из <span class="inline-math">p</span> мест можно выбрать одно из <span class="inline-math">a</span> чисел, поэтому всего точек <span class="inline-math">a<sup>p</sup></span>. На диагонали их ровно <span class="inline-math">a</span> — по одной для каждого числа, повторённого на всех местах. Остальные <span class="inline-math">a<sup>p</sup> − a</span> точек разбиваются на циклы по <span class="inline-math">p</span> точек, поэтому <span class="inline-math">p ∣ (a<sup>p</sup> − a)</span>.</p>
         </div>
       </section>
 
       <section id="binomial">
         <span class="section-number">07 / связь с биномом</span>
-        <h2>Где на рисунке биномиальные коэффициенты</h2>
+        <h2>Где на рисунках биномиальные коэффициенты</h2>
         <div class="prose">
-          <p>Увеличим сторону сетки с <span class="inline-math">a</span> до <span class="inline-math">a + 1</span>. Среди новых точек одна диагональная: <span class="inline-math">(a + 1, …, a + 1)</span>. У остальных новых точек пусть ровно <span class="inline-math">k</span> координат сохранили старые значения от 1 до <span class="inline-math">a</span>, где <span class="inline-math">1 ≤ k ≤ p − 1</span>.</p>
-          <p>Выбрать места для этих <span class="inline-math">k</span> координат можно <span class="inline-math">C(p, k)</span> способами. Задать их значения — <span class="inline-math">a<sup>k</sup></span> способами. Поэтому точек такого типа ровно <span class="inline-math">C(p, k)a<sup>k</sup></span>. Это и есть члены биномиального разложения.</p>
+          <p>Возьмём куб с тремя координатами (<span class="inline-math">p = 3</span>). Проследим по схемам куба, какие точки добавляются, когда его сторона увеличивается на единицу.</p>
+          <h3>От <span class="inline-math">a = 2</span> до <span class="inline-math">a + 1 = 3</span></h3>
         </div>
-        <div class="equation" aria-label="Прирост числа недиагональных точек">[(a + 1)<sup>p</sup> − (a + 1)] − [a<sup>p</sup> − a] = <span class="sum" aria-hidden="true"><span class="upper">p−1</span><span class="symbol">∑</span><span class="lower">k=1</span></span> C(p, k)a<sup>k</sup>.</div>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/binomial-cube-2-to-3-staggered.png" alt="Слои куба после увеличения стороны с 2 до 3. Серые клетки принадлежат исходному кубу. У шести новых точек одна старая координата, у двенадцати — две. Все координаты новой диагональной точки равны 3." loading="lazy"></div>
+          <figcaption><a class="figure-link" href="assets/binomial-cube-2-to-3-staggered.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
+        </figure>
         <div class="prose">
-          <p>Сдвиг координат не меняет <span class="inline-math">k</span>. При простом <span class="inline-math">p</span> все смешанные точки этого типа образуют циклы по <span class="inline-math">p</span>. Более того, если смотреть только на расположение старых и новых координат, каждый смешанный шаблон тоже входит в цикл из <span class="inline-math">p</span> шаблонов. Так видно, почему внутренние биномиальные коэффициенты <span class="inline-math">C(p, k)</span> кратны <span class="inline-math">p</span>.</p>
-          <p>При <span class="inline-math">r = 4</span> картина иная: <span class="inline-math">C(4, 2) = 6</span>. Среди шести шаблонов с двумя старыми координатами есть чередующаяся пара, возвращающаяся через два сдвига. Именно такой короткий цикл мы видели на рисунке.</p>
+          <p>В исходном кубе каждая координата равна 1 или 2. У каждой новой точки хотя бы одна координата равна 3. Посчитаем точки по тому, сколько мест заняты старыми значениями.</p>
+          <ul>
+            <li><strong>Одно старое значение.</strong> Оно может стоять на любом из трёх мест — <span class="inline-math">(s, 3, 3)</span>, <span class="inline-math">(3, s, 3)</span> или <span class="inline-math">(3, 3, s)</span>. На каждом из трёх мест <span class="inline-math">s</span> может равняться 1 или 2. Всего получается шесть точек <math display="inline" displaystyle="true">
+                <mo>(</mo>
+                <mrow>
+                  <mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>1</mn></mfrac><mo>)</mo></mrow>
+                  <mo>·</mo><mn>2</mn>
+                  <mo>=</mo>
+                  <mfrac>
+                    <mrow><mn>3</mn><mo>!</mo></mrow>
+                    <mrow><mrow><mn>1</mn><mo>!</mo></mrow><mspace width="0.18em"></mspace><mrow><mn>2</mn><mo>!</mo></mrow></mrow>
+                  </mfrac>
+                  <mo>·</mo><mn>2</mn>
+                  <mo>=</mo><mn>3</mn><mo>·</mo><mn>2</mn>
+                  <mo>=</mo><mn>6</mn>
+                </mrow>
+                <mo>)</mo>
+              </math>.</li>
+            <li><strong>Два старых значения.</strong> Теперь выбираем два места из трёх, а на оставшемся стоит тройка. Старые значения выбираются независимо — каждое равно 1 или 2. Всего получается двенадцать точек <math display="inline" displaystyle="true">
+                <mo>(</mo>
+                <mrow>
+                  <mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow>
+                  <mo>·</mo><msup><mn>2</mn><mn>2</mn></msup>
+                  <mo>=</mo>
+                  <mfrac>
+                    <mrow><mn>3</mn><mo>!</mo></mrow>
+                    <mrow><mrow><mn>2</mn><mo>!</mo></mrow><mspace width="0.18em"></mspace><mrow><mn>1</mn><mo>!</mo></mrow></mrow>
+                  </mfrac>
+                  <mo>·</mo><msup><mn>2</mn><mn>2</mn></msup>
+                  <mo>=</mo><mn>3</mn><mo>·</mo><mn>4</mn>
+                  <mo>=</mo><mn>12</mn>
+                </mrow>
+                <mo>)</mo>
+              </math>.</li>
+            <li><strong>Все координаты новые.</strong> Старых мест нет, поэтому все координаты равны 3. Получается одна диагональная точка <span class="inline-math">(3, 3, 3)</span> <math display="inline" displaystyle="true">
+                <mo>(</mo>
+                <mrow>
+                  <mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>0</mn></mfrac><mo>)</mo></mrow>
+                  <mo>·</mo><msup><mn>2</mn><mn>0</mn></msup>
+                  <mo>=</mo>
+                  <mfrac>
+                    <mrow><mn>3</mn><mo>!</mo></mrow>
+                    <mrow><mrow><mn>0</mn><mo>!</mo></mrow><mspace width="0.18em"></mspace><mrow><mn>3</mn><mo>!</mo></mrow></mrow>
+                  </mfrac>
+                  <mo>·</mo><msup><mn>2</mn><mn>0</mn></msup>
+                  <mo>=</mo><mn>1</mn><mo>·</mo><mn>1</mn>
+                  <mo>=</mo><mn>1</mn>
+                </mrow>
+                <mo>)</mo>
+              </math>.</li>
+          </ul>
+          <p>Всего добавилось <span class="inline-math">3<sup>3</sup> − 2<sup>3</sup> = 19</span> точек. Из них <span class="inline-math">6 + 12 = 18</span> лежат вне диагонали.</p>
+
+          <h3>От <span class="inline-math">a = 3</span> до <span class="inline-math">a + 1 = 4</span></h3>
+        </div>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/binomial-cube-3-to-4-staggered.png" alt="Слои куба после увеличения стороны с 3 до 4. Серые клетки принадлежат исходному кубу. У девяти новых точек одна старая координата, у двадцати семи — две. Все координаты новой диагональной точки равны 4." loading="lazy"></div>
+          <figcaption><a class="figure-link" href="assets/binomial-cube-3-to-4-staggered.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
+        </figure>
+        <div class="prose">
+          <p>Новое значение теперь 4, а для каждой старой координаты доступны 1, 2 и 3. Способы выбрать места остаются теми же.</p>
+          <ul>
+            <li><strong>Одно старое значение.</strong> Три варианта для его места и три для значения дают девять точек с двумя четвёрками <math display="inline" displaystyle="true">
+                <mo>(</mo>
+                <mrow>
+                  <mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>1</mn></mfrac><mo>)</mo></mrow>
+                  <mo>·</mo><mn>3</mn>
+                  <mo>=</mo>
+                  <mfrac>
+                    <mrow><mn>3</mn><mo>!</mo></mrow>
+                    <mrow><mrow><mn>1</mn><mo>!</mo></mrow><mspace width="0.18em"></mspace><mrow><mn>2</mn><mo>!</mo></mrow></mrow>
+                  </mfrac>
+                  <mo>·</mo><mn>3</mn>
+                  <mo>=</mo><mn>3</mn><mo>·</mo><mn>3</mn>
+                  <mo>=</mo><mn>9</mn>
+                </mrow>
+                <mo>)</mo>
+              </math>.</li>
+            <li><strong>Два старых значения.</strong> Три варианта для пары мест и по три значения на каждом дают двадцать семь точек с одной четвёркой <math display="inline" displaystyle="true">
+                <mo>(</mo>
+                <mrow>
+                  <mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow>
+                  <mo>·</mo><msup><mn>3</mn><mn>2</mn></msup>
+                  <mo>=</mo>
+                  <mfrac>
+                    <mrow><mn>3</mn><mo>!</mo></mrow>
+                    <mrow><mrow><mn>2</mn><mo>!</mo></mrow><mspace width="0.18em"></mspace><mrow><mn>1</mn><mo>!</mo></mrow></mrow>
+                  </mfrac>
+                  <mo>·</mo><msup><mn>3</mn><mn>2</mn></msup>
+                  <mo>=</mo><mn>3</mn><mo>·</mo><mn>9</mn>
+                  <mo>=</mo><mn>27</mn>
+                </mrow>
+                <mo>)</mo>
+              </math>.</li>
+            <li><strong>Все координаты новые.</strong> Старых мест нет, поэтому все координаты равны 4. Получается одна диагональная точка <span class="inline-math">(4, 4, 4)</span> <math display="inline" displaystyle="true">
+                <mo>(</mo>
+                <mrow>
+                  <mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>0</mn></mfrac><mo>)</mo></mrow>
+                  <mo>·</mo><msup><mn>3</mn><mn>0</mn></msup>
+                  <mo>=</mo>
+                  <mfrac>
+                    <mrow><mn>3</mn><mo>!</mo></mrow>
+                    <mrow><mrow><mn>0</mn><mo>!</mo></mrow><mspace width="0.18em"></mspace><mrow><mn>3</mn><mo>!</mo></mrow></mrow>
+                  </mfrac>
+                  <mo>·</mo><msup><mn>3</mn><mn>0</mn></msup>
+                  <mo>=</mo><mn>1</mn><mo>·</mo><mn>1</mn>
+                  <mo>=</mo><mn>1</mn>
+                </mrow>
+                <mo>)</mo>
+              </math>.</li>
+          </ul>
+          <p>Всего добавилось <span class="inline-math">4<sup>3</sup> − 3<sup>3</sup> = 37</span> точек, из них <span class="inline-math">9 + 27 = 36</span> вне диагонали.</p>
+          <p>В строке <span class="inline-math">1, 3, 3, 1</span> треугольника Паскаля теперь виден смысл обеих троек. Первая, <math display="inline"><mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>1</mn></mfrac><mo>)</mo></mrow></math>, считает способы выбрать одно место для старого значения. Вторая, <math display="inline"><mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow></math>, считает способы выбрать два места. При увеличении стороны растёт число доступных значений на каждом выбранном месте.</p>
+          <h3>Для произвольного числа координат</h3>
+          <p>Увеличим сторону сетки с <span class="inline-math">a</span> до <span class="inline-math">a + 1</span>. Пусть из <span class="inline-math">p</span> координат ровно <span class="inline-math">k</span> имеют старые значения от 1 до <span class="inline-math">a</span>. Все остальные равны новому числу <span class="inline-math">a + 1</span>.</p>
+          <p>Сначала выберем <span class="inline-math">k</span> мест из <span class="inline-math">p</span>. Это можно сделать <math display="inline" displaystyle="true"><mrow><mo>(</mo><mfrac linethickness="0"><mi>p</mi><mi>k</mi></mfrac><mo>)</mo></mrow></math> способами. На каждом выбранном месте независимо ставим одно из <span class="inline-math">a</span> чисел, поэтому для каждого набора мест есть <math display="inline" displaystyle="true"><msup><mi>a</mi><mi>k</mi></msup></math> вариантов заполнения. Перемножив эти два числа, получим число точек с ровно <span class="inline-math">k</span> старыми координатами.</p>
+        </div>
+        <div class="equation" aria-label="Число точек с ровно k старыми координатами">
+          <math display="inline" displaystyle="true">
+            <mrow><mo>(</mo><mfrac linethickness="0"><mi>p</mi><mi>k</mi></mfrac><mo>)</mo></mrow><mo>·</mo><msup><mi>a</mi><mi>k</mi></msup>
+            <mo>=</mo>
+            <mfrac>
+                <mrow><mi>p</mi><mo>!</mo></mrow>
+                <mrow><mi>k</mi><mo>!</mo><mspace width="0.18em"></mspace><mo>(</mo><mi>p</mi><mo>−</mo><mi>k</mi><mo>)</mo><mo>!</mo></mrow>
+              </mfrac>
+            <mo>·</mo><msup><mi>a</mi><mi>k</mi></msup>
+          </math>
+        </div>
+        <div class="prose">
+          <p>При <span class="inline-math">k = 0</span> получаем единственную новую диагональную точку <span class="inline-math">(a + 1, …, a + 1)</span>. При <span class="inline-math">k = p</span> все координаты старые, поэтому точка уже была в прежней сетке. Чтобы посчитать прирост числа точек вне диагонали, складываем слагаемые от <span class="inline-math">k = 1</span> до <span class="inline-math">k = p − 1</span>.</p>
+        </div>
+        <div class="equation" aria-label="Прирост числа недиагональных точек">
+          <math display="inline" displaystyle="true">
+            <mrow><mo>[</mo><msup><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>p</mi></msup><mo>−</mo><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mo>]</mo></mrow>
+            <mo>−</mo><mrow><mo>[</mo><msup><mi>a</mi><mi>p</mi></msup><mo>−</mo><mi>a</mi><mo>]</mo></mrow>
+            <mo>=</mo>
+            <munderover>
+              <mo movablelimits="false">∑</mo>
+              <mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow>
+              <mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow>
+            </munderover>
+            <mrow><mo>(</mo><mfrac linethickness="0"><mi>p</mi><mi>k</mi></mfrac><mo>)</mo></mrow><mo>·</mo><msup><mi>a</mi><mi>k</mi></msup>
+          </math>
+        </div>
+        <div class="prose">
+          <h3>Как сдвиг помогает посчитать способы выбрать места</h3>
+          <ol>
+            <li>
+              <p><strong>Отметим старые и новые места.</strong> Вернёмся к кубу, сторона которого выросла с 2 до 3. Обозначим старое значение (1 или 2) буквой <strong>С</strong>, а новое значение (3) — буквой <strong>Н</strong>. Например, точки <span class="inline-math">(1, 2, 3)</span> и <span class="inline-math">(2, 2, 3)</span> дают одну и ту же запись <strong>ССН</strong>. Такую запись будем называть шаблоном. Число букв С в нём — это <span class="inline-math">k</span>. В нашем примере <span class="inline-math">k = 2</span>.</p>
+            </li>
+            <li>
+              <p><strong>Проследим один цикл.</strong> Сдвигаем первую букву в конец и получаем <span class="inline-math">ССН → СНС → НСС</span>. Следующий сдвиг вернёт нас к ССН. На каждом шаге в записи две буквы С, поэтому <span class="inline-math">k</span> сохраняется. Мы перебрали все способы выбрать два старых места из трёх. Их <math display="inline"><mrow><mo>(</mo><mfrac linethickness="0"><mn>3</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mo>=</mo><mn>3</mn></math>. Каждому шаблону соответствуют <span class="inline-math">2<sup>2</sup> = 4</span> точки, поскольку на каждом месте С можно поставить 1 или 2. Итого три шаблона и двенадцать точек.</p>
+            </li>
+            <li>
+              <p><strong>На каких шагах запись возвращается?</strong> Пусть <span class="inline-math">d</span> — число сдвигов до первого возврата к исходной записи. На шаге <span class="inline-math">d</span> мы снова в начале и дальше делаем те же сдвиги в том же порядке. Поэтому до следующего возврата понадобится ещё ровно <span class="inline-math">d</span> шагов. Так получаются все шаги возврата — <span class="inline-math">d, 2d, 3d, …</span>.</p>
+              <p>Например, проследим четыре сдвига шаблона <strong>СНСН</strong>. Под каждой записью указан номер шага.</p>
+              <p class="cycle-steps"><math display="inline">
+                <munder><mtext>СНСН</mtext><mn>0</mn></munder><mo>→</mo>
+                <munder><mtext>НСНС</mtext><mn>1</mn></munder><mo>→</mo>
+                <munder><mtext>СНСН</mtext><mn>2</mn></munder><mo>→</mo>
+                <munder><mtext>НСНС</mtext><mn>3</mn></munder><mo>→</mo>
+                <munder><mtext>СНСН</mtext><mn>4</mn></munder>
+              </math></p>
+              <p>Первый возврат произошёл на шаге 2, второй — на шаге 4. За четыре сдвига мы дважды прошли один и тот же цикл длины 2.</p>
+            </li>
+            <li>
+              <p><strong>Что меняется, когда число мест простое?</strong> Если в записи <span class="inline-math">p</span> мест, то после <span class="inline-math">p</span> сдвигов каждая буква обойдёт весь круг и вернётся на своё место. Значит, <span class="inline-math">p</span> — один из шагов возврата <span class="inline-math">d, 2d, 3d, …</span>. Поэтому длина цикла <span class="inline-math">d</span> делит число мест <span class="inline-math">p</span>.</p>
+              <p>Именно теперь используем простоту <span class="inline-math">p</span>. У простого числа всего два положительных делителя, поэтому <span class="inline-math">d = 1</span> или <span class="inline-math">d = p</span>. Чтобы запись вернулась за один сдвиг, каждая буква должна совпадать со следующей по кругу. Тогда все буквы одинаковы. В смешанном шаблоне есть и С, и Н, поэтому его цикл имеет длину <span class="inline-math">p</span>.</p>
+            </li>
+            <li>
+              <p><strong>Посчитаем шаблоны двумя способами.</strong> Зафиксируем <span class="inline-math">k</span> от 1 до <span class="inline-math">p − 1</span>. Выбрав <span class="inline-math">k</span> мест для С, на всех остальных ставим Н. Каждому такому выбору соответствует ровно один шаблон, всего их <math display="inline"><mrow><mo>(</mo><mfrac linethickness="0"><mi>p</mi><mi>k</mi></mfrac><mo>)</mo></mrow></math>. С другой стороны, все эти шаблоны разбиваются на циклы по <span class="inline-math">p</span> штук. Поэтому сам коэффициент <math display="inline"><mrow><mo>(</mo><mfrac linethickness="0"><mi>p</mi><mi>k</mi></mfrac><mo>)</mo></mrow></math> делится на <span class="inline-math">p</span>.</p>
+            </li>
+          </ol>
+          <h3>Почему при четырёх местах получается иначе</h3>
+        </div>
+        <figure class="figure">
+          <div class="figure-scroll"><img src="assets/binomial-four-places-two-cycles.png" alt="Шесть способов выбрать два старых места из четырёх. Шаблоны ССНН, СННС, ННСС и НССН образуют цикл длины четыре. Чередующиеся СНСН и НСНС образуют цикл длины два." loading="lazy"></div>
+          <figcaption><a class="figure-link" href="assets/binomial-four-places-two-cycles.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
+        </figure>
+        <div class="prose">
+          <p>Пусть <span class="inline-math">r = 4</span> и <span class="inline-math">k = 2</span>. Выбираем два места для С, остальные два занимает Н. Число шаблонов равно
+            <math display="inline" displaystyle="true">
+              <mrow><mo>(</mo><mfrac linethickness="0"><mn>4</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mo>=</mo>
+              <mfrac><mrow><mn>4</mn><mo>!</mo></mrow><mrow><mn>2</mn><mo>!</mo><mspace width="0.18em"></mspace><mn>2</mn><mo>!</mo></mrow></mfrac>
+              <mo>=</mo><mn>6</mn>
+            </math>.
+            Выпишем все шесть, по одному циклу в каждой строке.</p>
+          <ul>
+            <li><span class="inline-math">ССНН → СННС → ННСС → НССН</span> — две буквы С стоят рядом по кругу. Исходная запись возвращается после четырёх сдвигов.</li>
+            <li><span class="inline-math">СНСН ↔ НСНС</span> — буквы чередуются. Уже второй сдвиг возвращает каждую букву на место с тем же обозначением.</li>
+          </ul>
+          <p>Шесть шаблонов распались на группы по четыре и по два, поэтому их число при делении на 4 даёт остаток 2. На схеме перехода от 1 к 2 видны обе точки короткого цикла. Если С — это 1, а Н — это 2, чередующиеся шаблоны дают точки <span class="inline-math">(1, 2, 1, 2) ↔ (2, 1, 2, 1)</span>.</p>
         </div>
         <figure class="figure figure-pascal">
           <div class="figure-scroll"><img src="assets/pascal.png" alt="Треугольник Паскаля до строки 13: внутренние биномиальные коэффициенты строк с простыми номерами выделены зелёным." loading="lazy"></div>
@@ -334,13 +636,62 @@
         <span class="section-number">08 / алгебраическое доказательство</span>
         <h2>Доказательство по индукции</h2>
         <div class="prose">
-          <p>Обозначим <span class="inline-math">F(a) = a<sup>p</sup> − a</span>. Начало: <span class="inline-math">F(1) = 0</span>. Для простого <span class="inline-math">p</span> и <span class="inline-math">1 ≤ k ≤ p − 1</span> число <span class="inline-math">C(p, k)</span> делится на <span class="inline-math">p</span>. Действительно, в равенстве <span class="inline-math">k!(p − k)!C(p, k) = p!</span> справа есть множитель <span class="inline-math">p</span>, а в произведении <span class="inline-math">k!(p − k)!</span> его нет.</p>
-          <p>По формуле для нового слоя <span class="inline-math">F(a + 1) − F(a)</span> — сумма слагаемых, каждое из которых кратно <span class="inline-math">p</span>. Значит, из делимости <span class="inline-math">F(a)</span> следует делимость <span class="inline-math">F(a + 1)</span>. По индукции <span class="inline-math">p ∣ (a<sup>p</sup> − a)</span> для любого натурального <span class="inline-math">a</span>.</p>
+          <p>Это второе доказательство малой теоремы Ферма. В первом мы разбили все точки вне диагонали на циклы длины <math display="inline"><mi>p</mi></math>. Теперь проследим, как меняется число этих точек, когда сторона сетки увеличивается на единицу. Формулу для одного нового слоя, знакомую по рисункам, здесь получим из бинома Ньютона.</p>
+          <p>Зафиксируем простое число <math display="inline"><mi>p</mi></math>. Обозначим число точек вне диагонали через <math display="inline"><mi>F</mi><mo>(</mo><mi>a</mi><mo>)</mo><mo>=</mo><msup><mi>a</mi><mi>p</mi></msup><mo>−</mo><mi>a</mi></math>. Докажем по индукции по <math display="inline"><mi>a</mi></math>, что это число всегда делится на <math display="inline"><mi>p</mi></math>.</p>
+
+          <h3>Почему каждый внутренний коэффициент делится на p</h3>
+          <p>В предыдущем разделе мы увидели это по циклам шаблонов. То же свойство можно получить из формулы для числа способов выбрать <math display="inline"><mi>k</mi></math> мест из <math display="inline"><mi>p</mi></math>. Возьмём <math display="inline"><mn>1</mn><mo>≤</mo><mi>k</mi><mo>≤</mo><mi>p</mi><mo>−</mo><mn>1</mn></math>.</p>
+        </div>
+        <div class="equation" aria-label="Формула биномиального коэффициента">
+          <math display="inline" displaystyle="true">
+            <mrow><mo>(</mo><mfrac linethickness="0"><mi>p</mi><mi>k</mi></mfrac><mo>)</mo></mrow><mo>=</mo>
+            <mfrac><mrow><mi>p</mi><mo>!</mo></mrow><mrow><mi>k</mi><mo>!</mo><mspace width="0.18em"></mspace><mo>(</mo><mi>p</mi><mo>−</mo><mi>k</mi><mo>)</mo><mo>!</mo></mrow></mfrac>
+          </math>
+        </div>
+        <div class="prose">
+          <p>Эта дробь равна целому числу, поскольку коэффициент считает способы выбора. В числителе <math display="inline"><mi>p</mi><mo>!</mo></math> есть множитель <math display="inline"><mi>p</mi></math>. В знаменателе все множители меньше <math display="inline"><mi>p</mi></math>. Поскольку <math display="inline"><mi>p</mi></math> простое, их произведение взаимно просто с <math display="inline"><mi>p</mi></math>. Поэтому при сокращении дроби множитель <math display="inline"><mi>p</mi></math> в числителе сохраняется, и весь коэффициент делится на <math display="inline"><mi>p</mi></math>.</p>
+
+          <h3>База индукции</h3>
+          <p>При <math display="inline"><mi>a</mi><mo>=</mo><mn>1</mn></math> в сетке всего одна точка, и она лежит на диагонали. Получаем <math display="inline"><mi>F</mi><mo>(</mo><mn>1</mn><mo>)</mo><mo>=</mo><msup><mn>1</mn><mi>p</mi></msup><mo>−</mo><mn>1</mn><mo>=</mo><mn>0</mn></math>. Ноль делится на <math display="inline"><mi>p</mi></math>.</p>
+
+          <h3>Переход от a к a + 1</h3>
+          <p>Предположим, что <math display="inline"><mi>F</mi><mo>(</mo><mi>a</mi><mo>)</mo></math> делится на <math display="inline"><mi>p</mi></math>. Найдём прирост. Раскроем <math display="inline"><msup><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>p</mi></msup></math> по биному Ньютона и вычтем два крайних слагаемых — <math display="inline"><msup><mi>a</mi><mi>p</mi></msup></math> и 1. Останется сумма с внутренними коэффициентами.</p>
+        </div>
+        <div class="equation" aria-label="Прирост при переходе от a к a плюс один">
+          <math display="inline" displaystyle="true">
+            <mi>F</mi><mo>(</mo><mi>a</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>−</mo><mi>F</mi><mo>(</mo><mi>a</mi><mo>)</mo><mo>=</mo>
+            <msup><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>p</mi></msup><mo>−</mo><msup><mi>a</mi><mi>p</mi></msup><mo>−</mo><mn>1</mn><mo>=</mo>
+            <munderover><mo movablelimits="false">∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow></munderover>
+            <mrow><mo>(</mo><mfrac linethickness="0"><mi>p</mi><mi>k</mi></mfrac><mo>)</mo></mrow><mo>·</mo><msup><mi>a</mi><mi>k</mi></msup>
+          </math>
+        </div>
+        <div class="prose">
+          <p>На рисунках каждое слагаемое <math display="inline"><mrow><mo>(</mo><mfrac linethickness="0"><mi>p</mi><mi>k</mi></mfrac><mo>)</mo></mrow><mo>·</mo><msup><mi>a</mi><mi>k</mi></msup></math> считает новые точки с ровно <math display="inline"><mi>k</mi></math> старыми координатами. Теперь видно, что оно кратно <math display="inline"><mi>p</mi></math>, поскольку его биномиальный коэффициент кратен <math display="inline"><mi>p</mi></math>. Значит, весь прирост тоже делится на <math display="inline"><mi>p</mi></math>.</p>
+          <p>Прибавляем этот прирост к <math display="inline"><mi>F</mi><mo>(</mo><mi>a</mi><mo>)</mo></math>. Оба числа делятся на <math display="inline"><mi>p</mi></math>, поэтому их сумма <math display="inline"><mi>F</mi><mo>(</mo><mi>a</mi><mo>+</mo><mn>1</mn><mo>)</mo></math> также делится на <math display="inline"><mi>p</mi></math>. По индукции для любого натурального <math display="inline"><mi>a</mi></math> получаем <math display="inline"><mi>p</mi><mo>∣</mo><mrow><mo>(</mo><msup><mi>a</mi><mi>p</mi></msup><mo>−</mo><mi>a</mi><mo>)</mo></mrow></math>.</p>
         </div>
       </section>
 
+      <section id="simple-proof">
+        <span class="section-number">09 / подсчёт по циклам</span>
+        <h2>Совсем общее и простое доказательство</h2>
+        <div class="prose">
+          <p>Соберём геометрическое доказательство в один подсчёт. Возьмём сетку размерности <math><mi>r</mi></math>. У каждой точки <math><mi>r</mi></math> координат, и на каждом месте можно поставить любое число от 1 до <math><mi>a</mi></math>. Значит, всего в сетке <math><msup><mi>a</mi><mi>r</mi></msup></math> точек.</p>
+          <p>Сгруппируем точки по циклам, каждый раз перенося первую координату в конец. Пусть длина одного такого цикла равна <math><mi>d</mi></math>. Исходная точка появляется снова на шагах <math><mi>d</mi><mo>,</mo><mn>2</mn><mi>d</mi><mo>,</mo><mn>3</mn><mi>d</mi><mo>,</mo><mo>…</mo></math>. Шаг <math><mi>r</mi></math> тоже даёт возврат, ведь каждая координата обошла все места. Поэтому <math><mi>d</mi></math> делит <math><mi>r</mi></math>.</p>
+          <p>Теперь возьмём простое число координат <math><mi>r</mi><mo>=</mo><mi>p</mi></math>. У него всего два положительных делителя — 1 и <math><mi>p</mi></math>. Цикл длины 1 означает, что после одного сдвига все координаты совпали со своими соседями. Это точки на главной диагонали, и их ровно <math><mi>a</mi></math> — по одной на каждое значение координаты. Все остальные циклы имеют длину <math><mi>p</mi></math>.</p>
+          <p>Обозначим через <math><mi>N</mi></math> число циклов вне диагонали. Подсчитаем все точки сетки, сложив <math><mi>a</mi></math> диагональных точек и <math><mi>N</mi></math> групп по <math><mi>p</mi></math> точек.</p>
+        </div>
+        <div class="equation" aria-label="Подсчёт всех точек по циклам">
+          <math display="inline" displaystyle="true">
+            <msup><mi>a</mi><mi>p</mi></msup><mo>=</mo><mi>a</mi><mo>+</mo><mi>p</mi><mi>N</mi>
+            <mo>⟹</mo>
+            <msup><mi>a</mi><mi>p</mi></msup><mo>−</mo><mi>a</mi><mo>=</mo><mi>p</mi><mi>N</mi>
+          </math>
+        </div>
+        <p class="prose">Так число точек вне диагонали кратно <math><mi>p</mi></math> при любом натуральном <math><mi>a</mi></math>.</p>
+      </section>
+
       <section id="about">
-        <span class="section-number">09 / контекст</span>
+        <span class="section-number">10 / контекст</span>
         <h2>Об этой визуализации</h2>
         <p class="source-note">Статья предлагает послойный способ проследить известное комбинаторное доказательство по отдельным точкам и связать их циклы с биномиальными коэффициентами. Близкое геометрическое разбиение гиперкуба исследует Aubrey Jaffer в работе <a href="https://people.csail.mit.edu/jaffer/Geometry/Pyramids" target="_blank" rel="noopener">Packing Pyramids</a>. Здесь акцент сделан на координатах, цветных циклах и переходе от рисунков к формуле.</p>
         <p class="source-note"><a href="assets/MTF_orbity_sloi_Pascal.drawio" download>Скачать редактируемые исходные схемы draw.io</a></p>
