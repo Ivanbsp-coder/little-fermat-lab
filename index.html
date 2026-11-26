@@ -136,6 +136,37 @@
     }
     #four .figure, #five .figure { width: 65%; }
     #four .figure img, #five .figure img { min-width: 450px; }
+    :is(#cube, #four, #five) .cycle-figure {
+      width: min(100%, calc(var(--diagram-width) + 38px));
+    }
+    :is(#cube, #four, #five) .cycle-figure img {
+      width: var(--diagram-width);
+      min-width: 0;
+      /* В статье заголовок схемы набран текстом, в полном PNG он остаётся частью рисунка. */
+      margin-top: var(--title-offset, 0);
+    }
+    .cube-pair {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      gap: 18px 12px;
+      width: 100%;
+      padding: 10px;
+    }
+    .cube-pair > figure { min-width: 0; margin: 0; }
+    @media (min-width: 960px) {
+      .cube-pair { grid-template-columns: minmax(0, 43fr) minmax(0, 33fr); }
+      #cube .cube-pair img { width: 100%; }
+      /* Убираем верхние 93 пикселя заголовка пропорционально ширине PNG. */
+      #cube-cycles .figure-scroll { --title-offset: -6.67%; }
+    }
+    .diagram-title {
+      margin: 0;
+      padding: 4px 16px 6px;
+      font-size: 16.8px;
+      font-weight: 650;
+      line-height: 1.25;
+    }
     .figure-pascal { width: 55%; }
     .figure-pascal img { min-width: 380px; }
     figcaption { margin-top: 12px; color: var(--muted); font-size: 11.2px; line-height: 1.5; }
@@ -262,12 +293,25 @@
         </figure>
         <div class="prose">
           <h3>Куб со стороной <span class="inline-math">a = 2</span></h3>
-          <p>У каждой точки три координаты, и каждая равна 1 или 2. Всего точек восемь. На главной диагонали лежат <span class="inline-math">(1, 1, 1)</span> и <span class="inline-math">(2, 2, 2)</span>. Остальные шесть точек образуют два цикла. В первом можно следить за двойкой, во втором — за единицей.</p>
+          <p>У каждой точки три координаты, и каждая равна 1 или 2. Всего точек восемь. На главной диагонали лежат <span class="inline-math">(1, 1, 1)</span> и <span class="inline-math">(2, 2, 2)</span>.</p>
+          <p>Остальные шесть точек образуют два цикла. В первом можно следить за двойкой, во втором — за единицей.</p>
           <ul>
             <li><span class="inline-math">(1, 1, 2) → (1, 2, 1) → (2, 1, 1)</span></li>
             <li><span class="inline-math">(1, 2, 2) → (2, 2, 1) → (2, 1, 2)</span></li>
           </ul>
-
+        </div>
+        <div class="figure cube-pair">
+          <figure class="cycle-figure" style="--diagram-width: 43em">
+            <div class="figure-scroll"><img src="assets/cube_edge_and_shift.png" alt="Слева куб в пространстве, справа те же восемь вершин сгруппированы по числу двоек. На обеих схемах выделены ребро 112–122 и стрелка 112 → 121." width="2144" height="1104" loading="lazy"></div>
+            <figcaption>Запись 112 обозначает точку (1, 1, 2). Оранжевое ребро ведёт из 112 в 122, а бирюзовая стрелка показывает, куда попадает 112 при сдвиге координат. <a class="figure-link" href="assets/cube_edge_and_shift.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
+          </figure>
+          <figure class="cycle-figure" id="cube-cycles" style="--diagram-width: 33em; --title-offset: -2.2em">
+            <p class="diagram-title">Куб и циклический сдвиг</p>
+            <div class="figure-scroll"><img src="assets/cube_cycles.png" alt="Циклы 112 → 121 → 211 → 112 и 122 → 221 → 212 → 122. Петли отмечают неподвижные вершины 111 и 222." width="1400" height="1130" loading="lazy"></div>
+            <figcaption>В ряду с одной двойкой можно проследить, как она обходит все три места. В ряду с двумя двойками так же движется единственная единица. <a class="figure-link" href="assets/cube_cycles.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
+          </figure>
+        </div>
+        <div class="prose">
           <h3>Куб со стороной <span class="inline-math">a = 3</span></h3>
           <p>Теперь каждая из трёх координат принимает значения от 1 до 3. Из 27 точек на главной диагонали лежат три — <span class="inline-math">(1, 1, 1)</span>, <span class="inline-math">(2, 2, 2)</span> и <span class="inline-math">(3, 3, 3)</span>. Остальные 24 точки образуют восемь циклов.</p>
           <p>В шести циклах две координаты равны. При каждом сдвиге отличающееся число переходит на соседнее место по кругу.</p>
@@ -319,6 +363,13 @@
             <li><span class="inline-math">(1, 2, 2, 2)</span> → <span class="inline-math">(2, 2, 2, 1)</span> → <span class="inline-math">(2, 2, 1, 2)</span> → <span class="inline-math">(2, 1, 2, 2)</span></li>
           </ul>
           <p>У двух оставшихся точек единицы и двойки чередуются. Первый сдвиг переводит одну точку в другую, а второй уже возвращает нас к исходной. Получается короткий цикл <span class="inline-math">(1, 2, 1, 2) ↔ (2, 1, 2, 1)</span>.</p>
+        </div>
+        <figure class="figure cycle-figure" style="--diagram-width: 38em; --title-offset: -2.35em">
+          <p class="diagram-title">Четырёхмерный куб и циклический сдвиг</p>
+          <div class="figure-scroll"><img src="assets/hypercube_4d_cycles.png" alt="Вершины четырёхмерного куба при a = 2 образуют три цикла длины четыре, один цикл длины два и две неподвижные точки." width="1980" height="1616" loading="lazy"></div>
+          <figcaption>В ряду с двумя двойками точки 1122, 1221, 2211 и 2112 образуют полный цикл. Справа виден короткий цикл 1212 ↔ 2121. <a class="figure-link" href="assets/hypercube_4d_cycles.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
+        </figure>
+        <div class="prose">
           <p>Три полных цикла дают 12 точек, а короткий цикл добавляет ещё две. Поэтому число точек вне диагонали <span class="inline-math">2<sup>4</sup> − 2 = 14 = 3 · 4 + 2</span> при делении на 4 даёт остаток 2.</p>
         </div>
         <div class="prose">
@@ -400,6 +451,13 @@
             <li><span class="inline-math">(1, 1, 2, 2, 2)</span> → <span class="inline-math">(1, 2, 2, 2, 1)</span> → <span class="inline-math">(2, 2, 2, 1, 1)</span> → <span class="inline-math">(2, 2, 1, 1, 2)</span> → <span class="inline-math">(2, 1, 1, 2, 2)</span></li>
             <li><span class="inline-math">(1, 2, 1, 2, 2)</span> → <span class="inline-math">(2, 1, 2, 2, 1)</span> → <span class="inline-math">(1, 2, 2, 1, 2)</span> → <span class="inline-math">(2, 2, 1, 2, 1)</span> → <span class="inline-math">(2, 1, 2, 1, 2)</span></li>
           </ul>
+        </div>
+        <figure class="figure cycle-figure" style="--diagram-width: 54em; --title-offset: -2.75em">
+          <p class="diagram-title">Пятимерный куб и циклический сдвиг</p>
+          <div class="figure-scroll"><img src="assets/hypercube_5d_cycles.png" alt="Из 32 вершин пятимерного куба две неподвижны. В рядах с одной, двумя, тремя и четырьмя двойками видно соответственно один, два, два и один цикл длины пять." width="2880" height="2256" loading="lazy"></div>
+          <figcaption>В ряду с двумя двойками видно два цикла по пять точек. В бирюзовом цикле двойки стоят рядом по кругу, в фиолетовом их разделяет одна единица с одной стороны и две с другой. <a class="figure-link" href="assets/hypercube_5d_cycles.png" target="_blank" rel="noopener">Открыть изображение отдельно</a></figcaption>
+        </figure>
+        <div class="prose">
           <p>После пяти сдвигов все координаты возвращаются на свои места. За эти пять шагов точка проходит свой цикл целое число раз, поэтому длина цикла делит 5. У простого числа 5 всего два положительных делителя — 1 и 5. Цикл длины 1 возможен только на диагонали, где все координаты равны.</p>
           <p>Значит, каждый цикл вне диагонали содержит ровно пять точек. Мы выписали шесть таких циклов, поэтому число точек вне диагонали <span class="inline-math">2<sup>5</sup> − 2 = 30 = 6 · 5</span> делится на 5.</p>
         </div>
@@ -415,6 +473,7 @@
         </div>
         <div class="equation" aria-label="Цикл точки с двумя одинаковыми координатами">(x, x, y) → (x, y, x) → (y, x, x)</div>
         <div class="prose">
+          <p>При <span class="inline-math">x = 1</span> и <span class="inline-math">y = 2</span> получаем знакомый цикл 112 → 121 → 211 → 112, показанный <a href="#cube-cycles">на схеме куба</a>.</p>
           <p>Теперь пусть число координат <span class="inline-math">r = p</span> простое. Через <span class="inline-math">p</span> сдвигов каждая координата обойдёт все места и вернётся на своё. Пусть точка впервые вернулась в исходное положение через <span class="inline-math">d</span> сдвигов. Дальше тот же цикл повторяется, поэтому и за <span class="inline-math">p</span> сдвигов точка проходит целое число циклов длины <span class="inline-math">d</span>. Значит, <span class="inline-math">d</span> делит <span class="inline-math">p</span>. У простого числа <span class="inline-math">p</span> всего два положительных делителя — 1 и само <span class="inline-math">p</span>.</p>
           <p>Когда возможен цикл длины 1? Сравним точку с её первым сдвигом. После сдвига каждое место занимает буква с соседнего места. Чтобы запись осталась прежней, все соседние буквы по кругу должны совпадать. Значит, все координаты равны. Это в точности диагональные точки, в записи которых одна и та же буква стоит на всех местах. Для любой точки вне диагонали остаётся единственная возможная длина цикла — <span class="inline-math">p</span>.</p>
           <p>На каждом из <span class="inline-math">p</span> мест можно выбрать одно из <span class="inline-math">a</span> чисел, поэтому всего точек <span class="inline-math">a<sup>p</sup></span>. На диагонали их ровно <span class="inline-math">a</span> — по одной для каждого числа, повторённого на всех местах. Остальные <span class="inline-math">a<sup>p</sup> − a</span> точек разбиваются на циклы по <span class="inline-math">p</span> точек, поэтому <span class="inline-math">p ∣ (a<sup>p</sup> − a)</span>.</p>
